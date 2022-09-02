@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using FluentAssertions;
 using RomanNumeralsConverter.Models;
+using System.Collections.Generic;
 
 
 namespace RomanNumeralsConverter.Tests
@@ -29,6 +30,22 @@ namespace RomanNumeralsConverter.Tests
             RomanNumeral.ConvertRomanNumeral("VIII").Should().Be(8);
             RomanNumeral.ConvertRomanNumeral("IX").Should().Be(9);
             RomanNumeral.ConvertRomanNumeral("X").Should().Be(10);
+        }
+
+        [Test]
+        public void Method_ConvertRomanNumeral_Should_Handle_Invalid_String_Inputs()
+        {
+            var invalidInput = "A";
+            var ex = Assert.Throws<KeyNotFoundException>(() => RomanNumeral.ConvertRomanNumeral(invalidInput));
+            Assert.That(ex.Message, Is.EqualTo("The given key '" +invalidInput + "' was not present in the dictionary."));
+
+            invalidInput = "XYZ";
+            ex = Assert.Throws<KeyNotFoundException>(() => RomanNumeral.ConvertRomanNumeral(invalidInput));
+            Assert.That(ex.Message, Is.EqualTo("The given key '" + invalidInput + "' was not present in the dictionary."));
+
+            invalidInput = "Paz";
+            ex = Assert.Throws<KeyNotFoundException>(() => RomanNumeral.ConvertRomanNumeral(invalidInput));
+            Assert.That(ex.Message, Is.EqualTo("The given key '" + invalidInput + "' was not present in the dictionary."));
         }
     }
 }
