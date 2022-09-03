@@ -33,6 +33,17 @@ namespace RomanNumeralsConverter.Tests
         }
 
         [Test]
+        public void Given_A_Roman_Numeral_In_Various_Upper_And_Lower_Cases_Should_Return_The_Correct_Number()
+        {
+            RomanNumeral.ConvertRomanNumeral("i").Should().Be(1);
+            RomanNumeral.ConvertRomanNumeral("Ii").Should().Be(2);
+            RomanNumeral.ConvertRomanNumeral("iII").Should().Be(3);
+            RomanNumeral.ConvertRomanNumeral("Iv").Should().Be(4);
+            RomanNumeral.ConvertRomanNumeral("v").Should().Be(5);
+            RomanNumeral.ConvertRomanNumeral("x").Should().Be(10);
+        }
+
+        [Test]
         public void Method_ConvertRomanNumeral_Should_Handle_Invalid_String_Inputs()
         {
             var invalidInput = "A";
@@ -44,6 +55,32 @@ namespace RomanNumeralsConverter.Tests
             Assert.That(ex.Message, Is.EqualTo("The given key '" + invalidInput + "' was not present in the dictionary."));
 
             invalidInput = "Paz";
+            ex = Assert.Throws<KeyNotFoundException>(() => RomanNumeral.ConvertRomanNumeral(invalidInput));
+            Assert.That(ex.Message, Is.EqualTo("The given key '" + invalidInput.ToUpper() + "' was not present in the dictionary."));
+
+            invalidInput = "7";
+            ex = Assert.Throws<KeyNotFoundException>(() => RomanNumeral.ConvertRomanNumeral(invalidInput));
+            Assert.That(ex.Message, Is.EqualTo("The given key '" + invalidInput.ToUpper() + "' was not present in the dictionary."));
+
+            invalidInput = "77";
+            ex = Assert.Throws<KeyNotFoundException>(() => RomanNumeral.ConvertRomanNumeral(invalidInput));
+            Assert.That(ex.Message, Is.EqualTo("The given key '" + invalidInput.ToUpper() + "' was not present in the dictionary."));
+        }
+
+        [Test]
+        public void Method_ConvertRomanNumeral_Should_Handle_Null_Inputs()
+        {
+            RomanNumeral.ConvertRomanNumeral(null).Should().Be(-1);
+        }
+
+        [Test]
+        public void Method_ConvertRomanNumeral_Should_Handle_Unusual_Inputs()
+        {
+            var invalidInput = " ";
+            var ex = Assert.Throws<KeyNotFoundException>(() => RomanNumeral.ConvertRomanNumeral(invalidInput));
+            Assert.That(ex.Message, Is.EqualTo("The given key '" + invalidInput + "' was not present in the dictionary."));
+
+            invalidInput = String.Empty;
             ex = Assert.Throws<KeyNotFoundException>(() => RomanNumeral.ConvertRomanNumeral(invalidInput));
             Assert.That(ex.Message, Is.EqualTo("The given key '" + invalidInput + "' was not present in the dictionary."));
         }

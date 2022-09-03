@@ -19,7 +19,7 @@ namespace RomanNumeralsConverter.Models
 
         public int ConvertRomanNumeral(string romanNumeral)
         {
-            return RomanNumeralList[romanNumeral];
+            return romanNumeral != null ? RomanNumeralList[romanNumeral.ToUpper()] : -1;
         }
     }
 }
